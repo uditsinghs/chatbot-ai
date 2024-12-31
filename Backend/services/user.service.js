@@ -12,3 +12,13 @@ export const createUser = async ({ email, password }) => {
     console.log(error);
   }
 };
+
+export const getAllUsers = async({userId})=>{
+  try {
+    const allusers = await User.find({_id:{$ne:userId}});
+    return allusers;
+  } catch (error) {
+   console.log(error);
+    
+  }
+}

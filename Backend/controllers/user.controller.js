@@ -1,5 +1,5 @@
 import { User } from "../models/user.model.js";
-import { createUser } from "../services/user.service.js";
+import { createUser, getAllUsers } from "../services/user.service.js";
 import { validationResult } from "express-validator";
 import redisClient from "../services/redis.service.js";
 
@@ -66,7 +66,7 @@ export const loginController = async (req, res) => {
 export const profileController = async (req, res) => {
   try {
     const { email } = req.user;
-    const user = await User.findOne({email});
+    const user = await User.findOne({ email });
     if (!user) {
       return res.status(404).json({
         message: "unauthorized user",
@@ -81,20 +81,28 @@ export const profileController = async (req, res) => {
   }
 };
 
-export const logoutController = async(req,res)=>{
+export const logoutController = async (req, res) => {
   try {
     const token = req.cookies.token;
-    redisClient.set(token,'logout','EX',60*24*24)
+    redisClient.set(token, "logout", "EX", 60 * 24 * 24);
     res.status(200).json({
-      message:"Logout successfully"
-    })
+      message: "Logout successfully",
+    });
   } catch (error) {
     console.log(error);
     res.status(500).json({
-      message:error.message || "Internal server error."
-    })
-    
+      message: error.message || "Internal server error.",
+    });
   }
-}
+};
 
-
+export const getAllUsersController = async () => {
+  try {
+    const loggedInUser = await User.findOne(req.user.email);
+    const allUsers = await getAllUsers({ userId: loggedInUser._id });
+    return res.status(200).json(allUsers);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: error.message });
+  }
+};

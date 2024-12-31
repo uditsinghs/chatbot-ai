@@ -2,7 +2,7 @@ import express from 'express';
 import userRouter from './routes/user.route.js';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
-
+import projectRouter from './routes/project.route.js'
 export const app = express();
 
 // CORS Configuration
@@ -20,3 +20,4 @@ app.use(express.urlencoded({ extended: true }));
 
 // Routes
 app.use('/api/v1/users', userRouter);
+app.use('/api/v1/project',projectRouter)

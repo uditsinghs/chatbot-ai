@@ -22,24 +22,26 @@ const Login = () => {
     setError("");
 
     try {
-      const { data } = await axios.post("/api/v1/users/login", input, { withCredentials: true });
+      const { data } = await axios.post("/api/v1/users/login", input, {
+        withCredentials: true,
+      });
       console.log(data);
-      navigate('/')
+      navigate("/");
     } catch (err) {
-      setError(err.response?.data?.message || "Something went wrong. Please try again.");
+      setError(
+        err.response?.data?.message || "Something went wrong. Please try again."
+      );
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="w-full max-w-sm mx-auto p-6 bg-gray-800 rounded-lg shadow-md">
+    <div className="w-full max-w-sm mx-auto p-6 bg-gray-800 rounded-lg shadow-md ">
       <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
       <form onSubmit={handleSubmit}>
         {error && (
-          <div className="mb-4 text-red-500 text-sm text-center">
-            {error}
-          </div>
+          <div className="mb-4 text-red-500 text-sm text-center">{error}</div>
         )}
         <div className="mb-4">
           <label htmlFor="email" className="block text-sm font-medium">
@@ -71,7 +73,9 @@ const Login = () => {
           type="submit"
           disabled={loading}
           className={`w-full py-3 rounded-lg font-bold transition ${
-            loading ? "bg-blue-400 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700"
+            loading
+              ? "bg-blue-400 cursor-not-allowed"
+              : "bg-blue-600 hover:bg-blue-700"
           } text-white`}
         >
           {loading ? "Logging in..." : "Login"}

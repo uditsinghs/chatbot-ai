@@ -6,7 +6,7 @@ import Home from '../pages/Home';
 
 const AppRoute = () => {
   return (
-    <div className="dark bg-gray-900 text-white min-h-screen flex items-center justify-center">
+    <div className="dark bg-gray-900 text-white h-screen">
       <Router>
         <Routes>
           <Route path="/login" element={<Login />} />
